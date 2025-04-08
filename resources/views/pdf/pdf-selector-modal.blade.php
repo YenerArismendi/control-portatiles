@@ -31,7 +31,7 @@
                         <td class="px-4 py-3 text-center">
                             <a href="{{ route('servicio.pdf', $servicio->id) }}"
                                target="_blank"
-                               class="inline-flex items-center gap-1 px-3 py-1 text-sm font-medium rounded bg-orange-600 hover:bg-orange-500 text-white transition">
+                               class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-black bg-yellow-400 rounded-md shadow hover:bg-yellow-300 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
                                 <x-heroicon-o-printer class="w-4 h-4"/>
                                 PDF
                             </a>
