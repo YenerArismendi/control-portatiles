@@ -6,6 +6,7 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Table;
 
 
@@ -91,12 +92,10 @@ class EquipoRelationManager extends RelationManager
                                     ->maxLength(255)
                                     ->columnSpan(6),
                             ]),
-
-
                     ])
                     ->columnSpan('full'),
-
             ]);
+
     }
 
     public function table(Table $table): Table
@@ -142,6 +141,17 @@ class EquipoRelationManager extends RelationManager
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
+                Action::make('descargar_pdf_modal')
+                    ->label('Descargar PDF')
+                    ->icon('heroicon-o-document-arrow-down')
+                    ->modalHeading('Selecciona un servicio para descargar el PDF')
+                    ->modalSubmitAction(false) // No botón "Submit" del modal
+                    ->modalContent(function ($record) {
+                        return view('pdf.pdf-selector-modal', [
+                            'equipo' => $record,
+                            'servicios' => $record->servicios, // relación
+                        ]);
+                    }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
