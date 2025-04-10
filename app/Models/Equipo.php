@@ -13,13 +13,13 @@ class Equipo extends Model
     protected $table = 'equipos';
     protected $fillable = ['cliente_id', 'marca', 'tipo_equipo', 'modelo', 'procesador', 'ram', 'almacenamiento', 'sistema_operativo', 'cargador', 'entregado', 'detalles'];
 
-    public function cliente(): BelongsTo
-    {
-        return $this->belongsTo(Cliente::class);
-    }
-
-    public function servicios(): HasMany
-    {
-        return $this->hasMany(Servicio::class);
-    }
+//    public function cliente(): BelongsTo
+//    {
+//        return $this->belongsTo(Cliente::class);
+//    }
+//
+//    public function servicios(): HasMany
+//    {
+//        return $this->hasMany(Servicio::class);
+//    }
 }

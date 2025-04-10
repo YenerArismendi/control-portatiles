@@ -14,9 +14,14 @@ class Cliente extends Model
     protected $table = 'clientes';
     protected $fillable = ['nombre', 'apellido', 'telefono', 'correo'];
 
-    public function equipo(): HasMany
+    public function equipoComputador()
     {
-        return $this->hasMany(Equipo::class);
+        return $this->hasMany(EquipoComputador::class);
+    }
+
+    public function equipoImpresora()
+    {
+        return $this->hasMany(EquipoImpresora::class);
     }
 
 
