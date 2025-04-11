@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('tipo_disco')->nullable();
             $table->string('capacidad_disco')->nullable();
             $table->string('fallo_reportado');
+            $table->string('diagnostico_tecnico')->nullable();
             $table->time('fecha_entrega')->nullable();
             $table->integer('cargador');
             $table->integer('estado');

@@ -33,6 +33,8 @@ class EquipoImpresoraRelationManager extends RelationManager
                 Forms\Components\TextInput::make('fallo_reportado')
                     ->required()
                     ->maxlength(255),
+                Forms\Components\TextInput::make('diagnostico_tecnico')
+                    ->maxlength(255),
                 Forms\Components\Select::make('estado')
                     ->options([
                         '0' => 'Recibida',
@@ -58,7 +60,12 @@ class EquipoImpresoraRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('modelo'),
                 Tables\Columns\TextColumn::make('tipo'),
                 Tables\Columns\TextColumn::make('serie'),
-                Tables\Columns\TextColumn::make('fallo_reportado'),
+                Tables\Columns\TextColumn::make('fallo_reportado')
+                    ->limit(20)
+                    ->tooltip(fn($record) => $record->fallo_reportado),
+                Tables\Columns\TextColumn::make('diagnostico_tecnico')
+                    ->limit(20)
+                    ->tooltip(fn($record) => $record->fallo_reportado),
                 Tables\Columns\TextColumn::make('estado')
                     ->formatStateUsing(function ($state) {
                         return match ($state) {

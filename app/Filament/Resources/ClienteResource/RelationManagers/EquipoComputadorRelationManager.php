@@ -53,6 +53,8 @@ class EquipoComputadorRelationManager extends RelationManager
                 Forms\Components\TextInput::make('fallo_reportado')
                     ->required()
                     ->maxlength(255),
+                Forms\Components\TextInput::make('diagnostico_tecnico')
+                    ->maxlength(255),
                 Forms\Components\DatePicker::make('fecha_entrega')
                     ->visible(fn(Forms\Get $get, ?Model $record) => $record !== null),
                 Forms\Components\Select::make('cargador')
@@ -83,23 +85,28 @@ class EquipoComputadorRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('ram'),
                 Tables\Columns\TextColumn::make('tipo_disco'),
                 Tables\Columns\TextColumn::make('capacidad_disco'),
-                Tables\Columns\TextColumn::make('fallo_reportado'),
+                Tables\Columns\TextColumn::make('fallo_reportado')
+                    ->limit(20)
+                    ->tooltip(fn($record) => $record->fallo_reportado),
+                Tables\Columns\TextColumn::make('diagnostico_tecnico')
+                    ->limit(20)
+                    ->tooltip(fn($record) => $record->fallo_reportado),
                 Tables\Columns\TextColumn::make('fecha_entrega'),
                 Tables\Columns\TextColumn::make('cargador')
-                ->formatStateUsing(function ($state){
-                    return match ($state) {
-                        0 => 'No',
-                        1 => 'Si',
-                    };
-                }),
+                    ->formatStateUsing(function ($state) {
+                        return match ($state) {
+                            0 => 'No',
+                            1 => 'Si',
+                        };
+                    }),
                 Tables\Columns\TextColumn::make('estado')
-                ->formatStateUsing(function ($state){
-                    return match ($state) {
-                        0 => 'Recibido',
-                        1 => 'En revisión',
-                        2 => 'Entregada',
-                    };
-                }),
+                    ->formatStateUsing(function ($state) {
+                        return match ($state) {
+                            0 => 'Recibido',
+                            1 => 'En revisión',
+                            2 => 'Entregada',
+                        };
+                    }),
             ])
             ->filters([
                 //

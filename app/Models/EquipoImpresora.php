@@ -10,7 +10,7 @@ class EquipoImpresora extends Model
     use HasFactory;
 
     protected $table = 'equipo_impresoras';
-    protected $fillable = ['id', 'cliente_id', 'marca', 'modelo', 'tipo', 'serie', 'fallo_reportado', 'estado', 'fecha_entrega', 'cargador'];
+    protected $fillable = ['id', 'cliente_id', 'marca', 'modelo', 'tipo', 'serie', 'fallo_reportado', 'estado', 'fecha_entrega', 'cargador', 'diagnostico_tecnico'];
 
     public function cliente()
     {
