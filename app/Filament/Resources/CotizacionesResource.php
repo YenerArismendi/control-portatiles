@@ -10,7 +10,9 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Table;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class CotizacionesResource extends Resource
 {
@@ -143,6 +145,10 @@ class CotizacionesResource extends Resource
             ->filters([])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Action::make('descargar_pdf')
+                    ->label('Descargar PDF')
+                    ->url(fn (Cotizacion $record) => route('cotizaciones.pdf', $record))
+                    ->openUrlInNewTab()
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

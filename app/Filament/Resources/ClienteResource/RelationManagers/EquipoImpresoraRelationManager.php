@@ -65,7 +65,7 @@ class EquipoImpresoraRelationManager extends RelationManager
                     ->tooltip(fn($record) => $record->fallo_reportado),
                 Tables\Columns\TextColumn::make('diagnostico_tecnico')
                     ->limit(20)
-                    ->tooltip(fn($record) => $record->fallo_reportado),
+                    ->tooltip(fn($record) => $record->diagnostico_tecnico),
                 Tables\Columns\TextColumn::make('estado')
                     ->formatStateUsing(function ($state) {
                         return match ($state) {

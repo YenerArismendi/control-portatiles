@@ -90,7 +90,7 @@ class EquipoComputadorRelationManager extends RelationManager
                     ->tooltip(fn($record) => $record->fallo_reportado),
                 Tables\Columns\TextColumn::make('diagnostico_tecnico')
                     ->limit(20)
-                    ->tooltip(fn($record) => $record->fallo_reportado),
+                    ->tooltip(fn($record) => $record->diagnostico_tecnico),
                 Tables\Columns\TextColumn::make('fecha_entrega'),
                 Tables\Columns\TextColumn::make('cargador')
                     ->formatStateUsing(function ($state) {
