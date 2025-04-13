@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('cotizaciones', function (Blueprint $table) {
             $table->id();
             $table->foreignId('cliente_id')->constrained()->onDelete('cascade');
+            $table->morphs('equipo');
             $table->date('fecha');
             $table->text('diagnostico')->nullable();
             $table->enum('estado', ['pendiente', 'aceptada', 'rechazada'])->default('pendiente');

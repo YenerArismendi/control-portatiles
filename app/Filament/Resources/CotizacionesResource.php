@@ -4,7 +4,10 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\CotizacionesResource\Pages;
 use App\Models\Cotizacion;
+use App\Models\EquipoComputador;
+use App\Models\EquipoImpresora;
 use Filament\Forms;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -37,7 +40,44 @@ class CotizacionesResource extends Resource
                     ->label('Cliente')
                     ->relationship('cliente', 'nombre')
                     ->searchable()
-                    ->required(),
+                    ->required()
+                    ->reactive(),
+                Forms\Components\Select::make('equipo')
+                    ->label('Equipo')
+                    ->required()
+                    ->reactive()
+                    ->options(function (\Filament\Forms\Get $get) {
+                        $clienteId = $get('cliente_id');
+
+                        if (!$clienteId) {
+                            return [];
+                        }
+
+                        $portatiles = \App\Models\EquipoComputador::where('cliente_id', $clienteId)->get();
+                        $impresoras = \App\Models\EquipoImpresora::where('cliente_id', $clienteId)->get();
+
+                        $options = [];
+
+                        foreach ($portatiles as $p) {
+                            $options["portatil-{$p->id}"] = 'Portátil - ' . $p->modelo;
+                        }
+
+                        foreach ($impresoras as $i) {
+                            $options["impresora-{$i->id}"] = 'Impresora - ' . $i->modelo;
+                        }
+
+                        return $options;
+                    })
+                    ->afterStateUpdated(function (\Filament\Forms\Set $set, ?string $state) {
+                        if (!$state) return;
+
+                        [$type, $id] = explode('-', $state);
+                        $set('equipo_type', $type === 'portatil' ? \App\Models\EquipoComputador::class : \App\Models\EquipoImpresora::class);
+                        $set('equipo_id', $id);
+                    }),
+
+                Hidden::make('equipo_id')->dehydrated(),
+                Hidden::make('equipo_type')->dehydrated(),
 
                 Forms\Components\DatePicker::make('fecha')
                     ->label('Fecha')
@@ -147,7 +187,7 @@ class CotizacionesResource extends Resource
                 Tables\Actions\EditAction::make(),
                 Action::make('descargar_pdf')
                     ->label('Descargar PDF')
-                    ->url(fn (Cotizacion $record) => route('cotizaciones.pdf', $record))
+                    ->url(fn(Cotizacion $record) => route('cotizaciones.pdf', $record))
                     ->openUrlInNewTab()
             ])
             ->bulkActions([

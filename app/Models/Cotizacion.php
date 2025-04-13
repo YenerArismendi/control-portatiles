@@ -13,7 +13,7 @@ class Cotizacion extends Model
     use HasFactory;
 
     protected $table = 'cotizaciones';
-    protected $fillable = ['id', 'cliente_id', 'fecha', 'diagnostico', 'estado', 'total', 'numero'];
+    protected $fillable = ['id', 'cliente_id', 'equipo_type', 'equipo_id', 'fecha', 'diagnostico', 'estado', 'total', 'numero'];
 
     public function cliente()
     {
@@ -35,5 +35,10 @@ class Cotizacion extends Model
             $nextNumber = $last ? ((int)filter_var($last->numero, FILTER_SANITIZE_NUMBER_INT)) + 1 : 1;
             $cotizacion->numero = 'COT' . str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
         });
+    }
+
+    public function equipo()
+    {
+        return $this->morphTo();
     }
 }

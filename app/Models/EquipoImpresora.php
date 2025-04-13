@@ -16,4 +16,9 @@ class EquipoImpresora extends Model
     {
         return $this->belongsTo(Cliente::class);
     }
+
+    public function cotizaciones()
+    {
+        return $this->morphMany(Cotizacion::class, 'equipo');
+    }
 }

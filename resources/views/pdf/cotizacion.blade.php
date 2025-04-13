@@ -103,10 +103,29 @@
 <div class="container">
     <h2>Cotización: {{ $cotizacion->numero }}</h2>
     <p><strong>Cliente:</strong> {!! htmlentities($cotizacion->cliente->nombre, ENT_QUOTES, 'UTF-8') !!}</p>
+    <p><strong>Marca:</strong>
+        @if ($cotizacion->equipo_type === \App\Models\EquipoComputador::class)
+            {{ \App\Models\EquipoComputador::find($cotizacion->equipo_id)->marca }}
+        @elseif ($cotizacion->equipo_type === \App\Models\EquipoImpresora::class)
+            {{ \App\Models\EquipoImpresora::find($cotizacion->equipo_id)->marca }}
+        @else
+            No asignado
+        @endif
+    </p>
+    <!-- Información del equipo -->
+    <p><strong>Modelo:</strong>
+        @if ($cotizacion->equipo_type === \App\Models\EquipoComputador::class)
+            {{ \App\Models\EquipoComputador::find($cotizacion->equipo_id)->modelo }}
+        @elseif ($cotizacion->equipo_type === \App\Models\EquipoImpresora::class)
+            {{ \App\Models\EquipoImpresora::find($cotizacion->equipo_id)->modelo }}
+        @else
+            No asignado
+        @endif
+    </p>
     <p><strong>Fecha:</strong> {{ $cotizacion->fecha }}</p>
+    <p><strong>Fallo reportado:</strong> {{ \App\Models\EquipoComputador::find($cotizacion->equipo_id)->fallo_reportado }}</p>
     <p><strong>Diagnóstico:</strong> {!! htmlentities($cotizacion->diagnostico, ENT_QUOTES, 'UTF-8') !!}</p>
     <p><strong>Estado:</strong> {{ $cotizacion->estado }}</p>
-
     <table>
         <thead>
         <tr>
