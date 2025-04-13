@@ -24,6 +24,8 @@ class EquipoImpresoraRelationManager extends RelationManager
                     ->maxLength(255),
                 Forms\Components\TextInput::make('modelo')
                     ->maxLength(255),
+                Forms\Components\TextInput::make('serie')
+                    ->maxLength(255),
                 Forms\Components\Select::make('tipo')
                     ->options([
                         'Impresora de inyección de tinta' => 'Impresora de inyección de tinta',
@@ -59,7 +61,9 @@ class EquipoImpresoraRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('marca'),
                 Tables\Columns\TextColumn::make('modelo'),
                 Tables\Columns\TextColumn::make('tipo'),
-                Tables\Columns\TextColumn::make('serie'),
+                Tables\Columns\TextColumn::make('serie')
+                ->limit(10)
+                ->tooltip(fn($record) => $record->serie),
                 Tables\Columns\TextColumn::make('fallo_reportado')
                     ->limit(20)
                     ->tooltip(fn($record) => $record->fallo_reportado),

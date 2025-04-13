@@ -24,6 +24,8 @@ class EquipoComputadorRelationManager extends RelationManager
                     ->maxLength(255),
                 Forms\Components\TextInput::make('modelo')
                     ->maxLength(255),
+                Forms\Components\TextInput::make('serie')
+                    ->maxLength(255),
                 Forms\Components\Select::make('tipo')
                     ->options([
                         'Escritorio' => 'Escritorio',
@@ -79,7 +81,9 @@ class EquipoComputadorRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('marca'),
                 Tables\Columns\TextColumn::make('modelo'),
                 Tables\Columns\TextColumn::make('tipo'),
-                Tables\Columns\TextColumn::make('serie'),
+                Tables\Columns\TextColumn::make('serie')
+                    ->limit(10)
+                    ->tooltip(fn($record) => $record->serie),
                 Tables\Columns\TextColumn::make('sistema_operativo'),
                 Tables\Columns\TextColumn::make('procesador'),
                 Tables\Columns\TextColumn::make('ram'),
