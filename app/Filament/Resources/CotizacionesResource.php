@@ -46,8 +46,9 @@ class CotizacionesResource extends Resource
                     ->label('Equipo')
                     ->required()
                     ->reactive()
-                    ->options(function (\Filament\Forms\Get $get) {
-                        $clienteId = $get('cliente_id');
+                    ->options(function ($get, $state, $livewire) {
+                        // Obtener cliente actual
+                        $clienteId = $get('cliente_id') ?? $livewire->record?->cliente_id;
 
                         if (!$clienteId) {
                             return [];
@@ -68,11 +69,26 @@ class CotizacionesResource extends Resource
 
                         return $options;
                     })
-                    ->afterStateUpdated(function (\Filament\Forms\Set $set, ?string $state) {
+                    ->afterStateHydrated(function ($set, $record) {
+                        if (!$record) return;
+
+                        $tipo = $record->equipo_type;
+                        $id = $record->equipo_id;
+
+                        if ($tipo === \App\Models\EquipoComputador::class) {
+                            $set('equipo', "portatil-{$id}");
+                        }
+
+                        if ($tipo === \App\Models\EquipoImpresora::class) {
+                            $set('equipo', "impresora-{$id}");
+                        }
+                    })
+                    ->afterStateUpdated(function ($set, $state) {
                         if (!$state) return;
 
-                        [$type, $id] = explode('-', $state);
-                        $set('equipo_type', $type === 'portatil' ? \App\Models\EquipoComputador::class : \App\Models\EquipoImpresora::class);
+                        [$tipo, $id] = explode('-', $state);
+
+                        $set('equipo_type', $tipo === 'portatil' ? \App\Models\EquipoComputador::class : \App\Models\EquipoImpresora::class);
                         $set('equipo_id', $id);
                     }),
 

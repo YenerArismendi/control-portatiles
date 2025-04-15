@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -13,16 +12,22 @@ return new class extends Migration
     {
         Schema::create('servicios', function (Blueprint $table) {
             $table->id();
-            $table->unsignedSmallInteger('equipo_id')->constrained('equipos')->cascadeOnDelete();
-            $table->date('fecha_reparacion')->nullable();
-            $table->integer('tipo_servicio');
-            $table->string('tareas_realizadas')->nullable();
+
+            $table->unsignedBigInteger('cotizacion_id');
+            $table->foreign('cotizacion_id')->references('id')->on('cotizaciones')->onDelete('cascade');
+
+            $table->morphs('equipo'); // Crea `equipo_id` y `equipo_type`
+
             $table->string('tecnico_responsable')->nullable();
-            $table->string('repuestos_usados')->nullable();
-            $table->integer('estado_final')->nullable();
+            $table->string('fallo_reportado')->nullable();
+            $table->string('diagnostico')->nullable();
+            $table->integer('estado')->default(0);
+            $table->string('descripcion_servicio')->nullable();
             $table->integer('garantia')->nullable();
             $table->string('recomendaciones')->nullable();
-
+            $table->decimal('total_servicio', 10, 2);
+            $table->date('fecha_reparacion')->nullable();
+            $table->date('fecha_entrega')->nullable();
             $table->timestamps();
         });
     }

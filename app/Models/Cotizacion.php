@@ -41,4 +41,10 @@ class Cotizacion extends Model
     {
         return $this->morphTo();
     }
+
+    public function servicio()
+    {
+        return $this->hasOne(Servicio::class);
+    }
+
 }
