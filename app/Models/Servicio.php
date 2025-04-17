@@ -29,4 +29,14 @@ class Servicio extends Model
         return $this->hasMany(RepuestoUtilizado::class);
     }
 
+    public function repuestos()
+    {
+        return $this->belongsToMany(Repuestos::class, 'repuesto_utilizados', 'servicio_id', 'repuesto_id')
+            ->withPivot('cantidad')
+            ->withPivot('precio_unitario')
+            ->withPivot('subtotal')
+            ->withPivot('descripcion')
+            ->withTimestamps();
+
+    }
 }

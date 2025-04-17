@@ -21,7 +21,7 @@
                         <td class="px-4 py-3 whitespace-nowrap">
                             {{ $servicio->tipo_servicio == 0 ? 'Mantenimiento preventivo' : 'Mantenimiento correctivo' }}
                         </td>
-                        <td class="px-4 py-3 whitespace-nowrap">{{ $servicio->tecnico_responsable }}</td>
+                        <td class="px-4 py-3 whitespace-nowrap">{{ $servicio->equipo_id }}</td>
                         <td class="px-4 py-3">
                                 <span class="inline-block px-2 py-1 rounded text-xs font-semibold
                                     {{ $servicio->estado_final == 0 ? 'bg-green-600/20 text-green-400' : 'bg-red-600/20 text-red-400' }}">
@@ -29,7 +29,7 @@
                                 </span>
                         </td>
                         <td class="px-4 py-3 text-center">
-                            <a href="{{ route('servicio.pdf', $servicio->id) }}"
+                            <a href="{{ route('servicios.pdf', $servicio->id) }}"
                                target="_blank"
                                class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-black bg-yellow-400 rounded-md shadow hover:bg-yellow-300 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
                                 <x-heroicon-o-printer class="w-4 h-4"/>

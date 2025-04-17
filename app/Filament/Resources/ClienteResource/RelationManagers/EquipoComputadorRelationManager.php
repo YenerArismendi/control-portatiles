@@ -2,10 +2,13 @@
 
 namespace App\Filament\Resources\ClienteResource\RelationManagers;
 
+use App\Models\Cotizacion;
+use App\Models\Servicio;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -175,7 +178,22 @@ class EquipoComputadorRelationManager extends RelationManager
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Action::make('ver_servicios')
+                    ->label('Ver Servicios')
+                    ->icon('heroicon-o-document-text')
+                    ->modalHeading('Servicios realizados')
+                    ->modalSubmitAction(false)
+                    ->modalContent(function ($record) {
+                        // Obtenemos los servicios para este equipo usando la relación polimórfica
+                        $servicios = Servicio::where('equipo_type', get_class($record))
+                            ->where('equipo_id', $record->id)
+                            ->get();
+
+                        return view('pdf.pdf-selector-modal', [
+                            'equipo' => $record,
+                            'servicios' => $servicios,
+                        ]);
+                    }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

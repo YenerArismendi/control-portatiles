@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('repuesto_utilizados', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('servicio_id')->constrained('servicios')->cascadeOnDelete();
-            $table->unsignedBigInteger('repuesto_id')->constrained('servicios')->cascadeOnDelete();
+            $table->unsignedBigInteger('repuesto_id')->constrained('servicios');
             $table->integer('cantidad');
             $table->decimal('precio_unitario', 10, 2);
             $table->decimal('subtotal', 10, 2);

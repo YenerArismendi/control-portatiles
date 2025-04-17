@@ -12,8 +12,10 @@ class ServicioPdfController extends Controller
     {
         $servicio = Servicio::with('equipo')->findOrFail($id);
 
-        // Aquí generas tu PDF con DomPDF, Snappy, etc.
-        $pdf = PDF::loadView('pdf.servicios', compact('servicio'));
+        $pdf = PDF::loadView('pdf.servicios', [
+            'servicio' => $servicio,
+            'equipo' => $servicio->equipo
+        ]);
 
         return $pdf->download("Servicio_{$servicio->id}.pdf");
     }

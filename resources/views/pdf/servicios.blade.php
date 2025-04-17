@@ -55,6 +55,50 @@
             border-left: 4px solid #007BFF;
             margin-top: 10px;
         }
+
+        /*Estilo para tabla*/
+        .table-repuestos {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            margin-top: 15px;
+            color: #333;
+        }
+
+        .table-repuestos thead {
+            background-color: #e2e8f0;
+        }
+
+        .table-repuestos th,
+        .table-repuestos td {
+            border: 1px solid #cbd5e0;
+            padding: 8px 12px;
+            text-align: left;
+            vertical-align: middle;
+        }
+
+        .table-repuestos th {
+            font-weight: 600;
+            font-size: 13px;
+            background-color: #edf2f7;
+        }
+
+        .table-repuestos tbody tr:nth-child(even) {
+            background-color: #f7fafc;
+        }
+
+        .table-repuestos tbody tr:hover {
+            background-color: #e2e8f0;
+        }
+
+        .titulo-tabla {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #2d3748;
+            border-bottom: 2px solid #cbd5e0;
+            padding-bottom: 4px;
+        }
     </style>
 </head>
 <body>
@@ -64,36 +108,59 @@
 </div>
 
 <div class="section">
-    <span class="label">Fecha de reparación:</span> {{ $servicio->fecha_reparacion }}
+    <span class="label">Marca y modelo:</span> {{ $servicio->equipo->marca . ' ' . $servicio->equipo->modelo }}
 </div>
-
-<div class="section">
-    <span class="label">Tipo de servicio:</span>
-    {{ $servicio->tipo_servicio == 0 ? 'Mantenimiento preventivo' : 'Mantenimiento correctivo' }}
-</div>
-
 <div class="section">
     <span class="label">Técnico responsable:</span> {{ $servicio->tecnico_responsable }}
 </div>
-
 <div class="section">
-    <span class="label">Estado final:</span>
-    {{ $servicio->estado_final == 0 ? 'Funcional' : 'Devuelto sin funcionar' }}
+    <span class="label">Fallo reportado:</span> {{ $servicio->fallo_reportado }}
 </div>
-
+<div class="section">
+    <span class="label">Diagnóstico:</span> {{ $servicio->diagnostico }}
+</div>
+<div class="section">
+    <span class="label">Estado final del equipo:</span>
+    {{ $servicio->estado == 0 ? 'Funcional' : 'Devuelto sin funcionar' }}
+</div>
+<div class="section">
+    <span class="label">Servicio realizado:</span> {{ $servicio->descripcion_servicio }}
+</div>
 <div class="section">
     <span class="label">Garantía:</span> {{ $servicio->garantia == 0 ? 'Sí' : 'No' }}
 </div>
-
+{{--@dd($servicio)--}}
 <div class="section">
-    <span class="label">Repuestos usados:</span>
-    <div class="info-box">{{ $servicio->repuestos_usados }}</div>
+    <span class="label">Fecha de reparación:</span> {{ $servicio->fecha_reparacion }}
 </div>
-
 <div class="section">
-    <span class="label">Tareas realizadas:</span>
-    <div class="info-box">{{ $servicio->tareas_realizadas }}</div>
+    <span class="label">Fecha de entrega:</span> {{ $servicio->fecha_entrega }}
 </div>
+<h3 class="titulo-tabla">Repuestos Usados</h3>
+
+<table class="table-repuestos">
+    <thead>
+    <tr>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Cantidad</th>
+        <th>Precio unitario</th>
+        <th>Subtotal</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach($servicio->repuestos as $repuesto)
+        <tr>
+            <td>{{ $repuesto->nombre }}</td>
+            <td>{{ $repuesto->pivot->descripcion }}</td>
+            <td>{{ $repuesto->pivot->cantidad }}</td>
+            <td>${{ number_format($repuesto->pivot->precio_unitario, 0, ',', '.') }}</td>
+            <td>${{ number_format($repuesto->pivot->subtotal, 0, ',', '.') }}</td>
+        </tr>
+    @endforeach
+    </tbody>
+</table>
+<h3 class="titulo-tabla">Total: ${{ number_format($servicio->total_servicio, 0, ',', '.') }}</h3>
 
 <div class="section">
     <span class="label">Recomendaciones:</span>
@@ -101,7 +168,10 @@
 </div>
 
 <div class="footer">
-    Generado automáticamente por el sistema el {{ \Carbon\Carbon::now()->format('d/m/Y H:i') }}
+    <p>Generado automáticamente por el sistema el {{ \Carbon\Carbon::now()->format('d/m/Y H:i') }}</p>
+    @if($servicio->garantia == 0)
+        <p>La duración de la garantía es de 5 días.</p>
+    @endif
 </div>
 
 </body>

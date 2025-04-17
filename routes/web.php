@@ -10,7 +10,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/servicio/{servicio}/pdf', [ServicioPdfController::class, 'descargarPDF'])->name('servicio.pdf');
+Route::get('/equipos/pdf-servicios/{id}', [ServicioPdfController::class, 'descargarPDF'])
+    ->name('servicios.pdf');
 
 Route::get('/cotizaciones/{id}/pdf', [CotizacionPdfController::class, 'generarPDF'])->name('cotizaciones.pdf');
 
