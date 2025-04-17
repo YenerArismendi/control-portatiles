@@ -22,6 +22,6 @@ class CotizacionPdfController extends Controller
         }
 
         $pdf = PDF::loadView('pdf.cotizacion', compact('cotizacion'));
-        return $pdf->download("cotizacion_{$cotizacion->numero}.pdf");
+        return $pdf->stream("cotizacion_{$cotizacion->numero}.pdf");
     }
 }

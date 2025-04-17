@@ -102,6 +102,35 @@
     </style>
 </head>
 <body>
+<table width="100%" style="border: 1px solid #ccc; border-collapse: collapse; font-family: sans-serif;">
+    <tr>
+        <!-- Logo -->
+        <td style="width: 120px; border-right: 1px solid #ccc; text-align: center; background-color: #fff; padding: 10px;">
+            <img src="{{ public_path('imagen/logo-control-portatiles.jpg') }}" alt="Logo" width="100">
+        </td>
+
+        <!-- Información -->
+        <td style="background-color: #f3f3f3; padding: 10px;">
+            <!-- Título -->
+            <h2 style="margin: 0; color: #4CAF50; text-align: center;">Eky'u</h2>
+
+            <!-- Línea verde -->
+            <hr style="border: none; border-top: 2px solid #4CAF50; margin: 5px 0;">
+
+            <!-- Detalles -->
+            <p style="margin: 5px 0;">
+                <strong>Contacto:</strong> julio825_anaya@hotmail.com
+            </p>
+            <p style="margin: 5px 0;">
+                <strong>Propietario:</strong> Julio Anaya Rodriguez
+            </p>
+            <p style="margin: 5px 0; color: #4CAF50;">
+                <strong>Teléfono:</strong> +57 3115637752
+            </p>
+        </td>
+    </tr>
+</table>
+<br>
 
 <div class="header">
     <div class="title">Reporte de Servicio Técnico</div>
@@ -168,10 +197,10 @@
 </div>
 
 <div class="footer">
-    <p>Generado automáticamente por el sistema el {{ \Carbon\Carbon::now()->format('d/m/Y H:i') }}</p>
     @if($servicio->garantia == 0)
-        <p>La duración de la garantía es de 5 días.</p>
+        <p>La duración de la garantía es de 60 días.</p>
     @endif
+    <p>Generado automáticamente por el sistema el {{ \Carbon\Carbon::now()->format('d/m/Y H:i') }}</p>
 </div>
 
 </body>

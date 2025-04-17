@@ -21,7 +21,7 @@ class CotizacionesResource extends Resource
 {
     protected static ?string $model = Cotizacion::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-document-text';
     protected static ?string $navigationLabel = 'Cotizacion';
 
     public static function form(Form $form): Form
@@ -207,6 +207,7 @@ class CotizacionesResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Action::make('descargar_pdf')
+                    ->icon('heroicon-o-document-arrow-down')
                     ->label('Descargar PDF')
                     ->url(fn(Cotizacion $record) => route('cotizaciones.pdf', $record))
                     ->openUrlInNewTab()

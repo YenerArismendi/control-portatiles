@@ -17,6 +17,6 @@ class ServicioPdfController extends Controller
             'equipo' => $servicio->equipo
         ]);
 
-        return $pdf->download("Servicio_{$servicio->id}.pdf");
+        return $pdf->stream("Servicio_{$servicio->id}.pdf");
     }
 }

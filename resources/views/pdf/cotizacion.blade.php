@@ -21,11 +21,52 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
+        .header {
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            width: 120px; /* Ajusta según el tamaño del logo */
+            height: auto; /* Mantener la proporción del logo */
+        }
+
+        .company-info {
+            text-align: right;
+        }
+
+        .company-name {
+            font-size: 26px;
+            font-weight: bold;
+            color: #4CAF50;
+            margin: 0;
+        }
+
+        .company-contact {
+            font-size: 14px;
+            color: #555;
+            margin-top: 5px;
+        }
+
+        .company-contact strong {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .company-contact p {
+            margin: 3px 0;
+        }
+
         h2 {
             color: #333;
             text-align: center;
             border-bottom: 2px solid #4CAF50;
             padding-bottom: 10px;
+            margin-bottom: 20px;
         }
 
         p {
@@ -86,7 +127,7 @@
             text-align: center;
             font-size: 12px;
             color: #777;
-            margin-top: 20px;
+            margin-top: 30px;
         }
 
         .footer p {
@@ -101,6 +142,22 @@
 </head>
 <body>
 <div class="container">
+    <table width="100%" style="border: 1px solid #000; border-collapse: collapse; margin-bottom: 20px;">
+        <tr>
+            <td style="width: 100px; padding: 10px; border-right: 1px solid #000; vertical-align: middle;">
+                <img src="{{ public_path('imagen/logo-control-portatiles.jpg') }}" alt="Logo" width="100">
+            </td>
+            <td style="padding: 10px; vertical-align: middle;">
+                <h2 style="margin: 0; color: #4CAF50;">Eky'u</h2>
+                <p style="margin: 4px 0;"><strong>Contacto:</strong> julio825_anaya@hotmail.com</p>
+                <p style="margin: 4px 0;"><strong>Propietario:</strong> Julio Anaya Rodriguez</p>
+                <a href="https://wa.me/573115637752" style="text-decoration: none; color: #4CAF50;" target="_blank">
+                    <strong>Telefono:</strong> +57 3115637752
+                </a>
+            </td>
+        </tr>
+    </table>
+
     <h2>Cotización: {{ $cotizacion->numero }}</h2>
     <p><strong>Cliente:</strong> {!! htmlentities($cotizacion->cliente->nombre, ENT_QUOTES, 'UTF-8') !!}</p>
     <p><strong>Marca:</strong>
@@ -123,7 +180,8 @@
         @endif
     </p>
     <p><strong>Fecha:</strong> {{ $cotizacion->fecha }}</p>
-    <p><strong>Fallo reportado:</strong> {{ \App\Models\EquipoComputador::find($cotizacion->equipo_id)->fallo_reportado }}</p>
+    <p><strong>Fallo
+            reportado:</strong> {{ \App\Models\EquipoComputador::find($cotizacion->equipo_id)->fallo_reportado }}</p>
     <p><strong>Diagnóstico:</strong> {!! htmlentities($cotizacion->diagnostico, ENT_QUOTES, 'UTF-8') !!}</p>
     <p><strong>Estado:</strong> {{ $cotizacion->estado }}</p>
     <table>
@@ -154,7 +212,7 @@
 
 <div class="footer">
     <p>Si tienes alguna pregunta, por favor contacta con nosotros.</p>
-    <p><a href="mailto:soporte@empresa.com">soporte@empresa.com</a></p>
+    <p><a href="mailto:julio825_anaya@hotmail.com">julio825_anaya@hotmail.com</a></p>
 </div>
 </body>
 </html>

@@ -24,6 +24,10 @@ class AdminPanelProvider extends PanelProvider
     {
         return $panel
             ->default()
+            ->brandName("Eky'u")
+//            ->brandLogo(asset('imagen/logo-redondo.png'))
+//            ->brandLogoHeight('4rem')
+            ->favicon(asset('imagen/logo-redondo.png'))
             ->id('admin')
             ->path('admin')
             ->login()
