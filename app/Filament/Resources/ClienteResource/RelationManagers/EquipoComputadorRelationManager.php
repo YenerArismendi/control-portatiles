@@ -178,6 +178,7 @@ class EquipoComputadorRelationManager extends RelationManager
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
                 Action::make('ver_servicios')
                     ->label('Ver Servicios')
                     ->icon('heroicon-o-document-text')
