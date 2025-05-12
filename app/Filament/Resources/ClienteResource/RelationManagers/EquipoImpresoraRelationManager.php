@@ -52,6 +52,61 @@ class EquipoImpresoraRelationManager extends RelationManager
                         '1' => 'Si',
                         '0' => 'No',
                     ]),
+                Forms\Components\Repeater::make('servicio')
+                    ->relationship('servicio')
+                    ->schema([
+                        Forms\Components\Grid::make(12)
+                            ->schema([
+                                Forms\Components\Placeholder::make('cotizacion')
+                                    ->label('Cotización')
+                                    ->content(fn($record) => $record?->cotizacion?->numero ?? 'Sin cotización')
+                                    ->columnSpan(6),
+                                Forms\Components\TextInput::make('tecnico_responsable')
+                                    ->maxLength(255)
+                                    ->columnSpan(6),
+                                Forms\Components\TextInput::make('fallo_reportado')
+                                    ->maxLength(255)
+                                    ->columnSpan(6),
+                                Forms\Components\TextInput::make('diagnostico')
+                                    ->maxLength(255)
+                                    ->required()
+                                    ->columnSpan(6),
+                                Forms\Components\Select::make('estado')
+                                    ->options([
+                                        '0' => 'Funcional',
+                                        '1' => 'Devuelto sin funcionar'
+                                    ])
+                                    ->required()
+                                    ->columnSpan(6),
+                                Forms\Components\TextInput::make('descripcion_servicio')
+                                    ->maxLength(255)
+                                    ->columnSpan(6),
+                                Forms\Components\Select::make('garantia')
+                                    ->options([
+                                        '0' => 'Si',
+                                        '1' => 'No'
+                                    ])
+                                    ->required()
+                                    ->columnSpan(6),
+                                Forms\Components\TextInput::make('recomendaciones')
+                                    ->maxLength(255)
+                                    ->columnSpan(6),
+                                Forms\Components\TextInput::make('total_servicio')
+                                    ->label('Total del servicio')
+                                    ->disabled() // lo hace no editable
+                                    ->dehydrated(false) // evita que el valor se envíe al guardar
+                                    ->formatStateUsing(fn($state) => '$' . number_format($state, 0, ',', '.'))
+                                    ->columnSpan(6),
+                                Forms\Components\DatePicker::make('fecha_reparacion')
+                                    ->columnSpan(6),
+                                Forms\Components\DatePicker::make('fecha_entrega')
+                                    ->columnSpan(6),
+                            ]),
+
+
+                    ])
+                    ->columnSpan('full'),
+
             ]);
     }
 
